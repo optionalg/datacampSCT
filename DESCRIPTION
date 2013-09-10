@@ -1,0 +1,10 @@
+Package: datamindSCT
+Type: Package 
+Title: Easily write submission correctness Tests
+Version: 0.1 
+Date: 2013-09-07
+Author: Jonathan Cornelissen 
+Maintainer: Jonathan Cornelissen <Jonathan@datamind.org>
+Description: This package makes it easy and fun to write Submission Correctness Tests (SCTs) for your interactive courses on www.datamind.org. 
+License: MIT 
+URL: www.datamind.org 
