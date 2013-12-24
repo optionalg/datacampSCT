@@ -13,6 +13,10 @@ student_typed <- function(string, user.code=DM.user.code){
   user.code <- gsub( "TRUE", "T", user.code );
   string    <- gsub( "TRUE", "T", string );
   
+  # Student can use double and single quotes:
+  user.code <- gsub( "\"", "\'", user.code );
+  string    <- gsub( "\"", "\'", user.code );
+  
   # Find reg ex and return result:  
   where.is.regex <- gregexpr(pattern=string, text=user.code,fixed=TRUE);
   if( any(where.is.regex[[1]] == (-1)) ){ return(FALSE) } # No match for the reg ex 
