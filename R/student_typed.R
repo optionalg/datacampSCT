@@ -15,7 +15,7 @@ student_typed <- function(string, user.code=DM.user.code){
   
   # Student can use double and single quotes:
   user.code <- gsub( "\"", "\'", user.code );
-  string    <- gsub( "\"", "\'", user.code );
+  string    <- gsub( "\"", "\'", string );
   
   # Find reg ex and return result:  
   where.is.regex <- gregexpr(pattern=string, text=user.code,fixed=TRUE);
