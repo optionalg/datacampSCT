@@ -16,7 +16,7 @@ check_arguments = function(student_arguments, args, values,eval){
       if (eval[index]==FALSE){
         match_vector[i] =  try(identical(as.character(relevant_student_args[index]), as.character(values[index])));
       } else {
-        match_vector[i] =  try(identical(get(relevant_student_args[index]), get(values[index])));        
+        match_vector[i] =  try(identical(capture.output(try(eval(parse(text=relevant_student_args[index])))), capture.output(try(eval(parse(text=values[index]))))));        
       }
     }                      
   }

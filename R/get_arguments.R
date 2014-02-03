@@ -5,6 +5,9 @@ get_arguments = function(function.name, user.code=DM.user.code){
   # The ouput is a list. Each list component contains a vector with the supplied arguments.
   # The names of the latter vector are the respective argument names.
   
+  # Remove white spaces, ";" and "\n" from user.code
+  user.code <- gsub( "[[:space:]]|;|\n","",user.code );
+
   my.regex <- paste( function.name, "\\(.*?\\)",sep="") # Make reg ex pattern
   where.is.regex <- gregexpr(pattern=my.regex,text=user.code)    
   if( any(where.is.regex[[1]] == (-1)) ){ return(FALSE) } # No match for the reg ex 
