@@ -37,8 +37,15 @@ get_arguments = function(function.name, user.code=DM.user.code){
         names.vector[a] <- split.argument[1]            
       }
     }
+    
+    # no freaking quotes
+    arguments.vector = gsub( "'","",arguments.vector);
+    arguments.vector = gsub( "\"","",arguments.vector)
+    
     names(arguments.vector) <- names.vector    
     argument.list[[i]] <- arguments.vector
   }#end loop
   return(argument.list)
 }
+
+
