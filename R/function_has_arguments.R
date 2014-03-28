@@ -12,11 +12,9 @@ arguments_for_expression = function(expression=NULL,fun=NULL){
   arguments <- match.call(get(fun), call=parse(text=expression))[-1];
   arguments_list = as.list(arguments);
   
-  # wtf, symbols? why oh why R.
   # start ugly-fix:
   names = names(arguments_list);
-  selection = sapply(arguments_list,is.symbol)
-  arguments_list[selection] = as.character(arguments_list[selection]);
+  arguments_list = as.character(arguments_list);
   names(arguments_list) = names;
   # end ugly-fix
   
@@ -53,7 +51,6 @@ check_function_arguments = function(student_arguments=NULL,args=args,values=valu
   }  
 }
 
-
 function_has_arguments = function(fun=NULL,args=NULL,values=NULL,eval=NULL){
   if (is.null(eval)){ 
     eval = rep(FALSE,length(args)) 
@@ -72,13 +69,9 @@ function_has_arguments = function(fun=NULL,args=NULL,values=NULL,eval=NULL){
   }
   
   # Step 3: Find matches:
-  if (!is.null(args) && !is.null(values)){
-    matches = c();
-    for(i in 1:length(argument_list)){
-      matches[i] = check_function_arguments(argument_list[[i]],args,values,eval);
-    }
-    return(sum(matches))
+  matches = c();
+  for(i in 1:length(argument_list)){
+    matches[i] = check_function_arguments(argument_list[[i]],args,values,eval);
   }
+  return(sum(matches))
 }
-
-# TODO: TEST THIS! specifically for special functions e.g. mean
