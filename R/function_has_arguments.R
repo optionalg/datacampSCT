@@ -22,8 +22,9 @@ arguments_for_expression = function(expression=NULL,fun=NULL){
 }
 
 check_function_arguments = function(student_arguments=NULL,args=args,values=values,eval=eval){
-  relevant_student_args = student_arguments[ names(student_arguments) %in% args ];
+  relevant_student_args = student_arguments[ names(student_arguments) %in% args ];  
   if(length(relevant_student_args)!=length(args)){ return(FALSE) }
+  
   
   match_vector = c();
   # Situation with values:
@@ -51,13 +52,25 @@ check_function_arguments = function(student_arguments=NULL,args=args,values=valu
   }  
 }
 
+code_is_correct = function(code=DM.user.code){
+  x = try(eval(parse(text=code)),silent=TRUE)
+  is_correct = ! "try-error" %in% class(x)
+  ifelse(is_correct,return(TRUE),return(FALSE))
+}
+
 function_has_arguments = function(fun=NULL,args=NULL,values=NULL,eval=NULL){
+  if(!code_is_correct()){ return(FALSE) }
+  if(is.null(fun)){ return(FALSE) }
+  if(is.null(args)){     
+    return(length(expressions_for_function(fun))) 
+  }
   if (is.null(eval)){ 
     eval = rep(FALSE,length(args)) 
   }
   if (!is.null(values) && length(eval)!=length(values)){ 
     stop("eval vector should have same lenght as values vector, for obvious reasons ;-).") 
   }
+  
   # Step 1: Get the expressions in which the function is used:
   expressions = expressions_for_function(fun);
   if(length(expressions)==0){ return(FALSE) }
