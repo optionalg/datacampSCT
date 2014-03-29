@@ -58,11 +58,11 @@ code_is_correct = function(code=DM.user.code){
   ifelse(is_correct,return(TRUE),return(FALSE))
 }
 
-function_has_arguments = function(fun=NULL,args=NULL,values=NULL,eval=NULL){
-  if(!code_is_correct()){ return(FALSE) }
+function_has_arguments = function(fun=NULL,args=NULL,values=NULL,eval=NULL,code=DM.user.code){
+  if(!code_is_correct(code)){ return(FALSE) }
   if(is.null(fun)){ return(FALSE) }
   if(is.null(args)){     
-    return(length(expressions_for_function(fun))) 
+    return(length(expressions_for_function(fun,code))) 
   }
   if (is.null(eval)){ 
     eval = rep(FALSE,length(args)) 
@@ -72,7 +72,7 @@ function_has_arguments = function(fun=NULL,args=NULL,values=NULL,eval=NULL){
   }
   
   # Step 1: Get the expressions in which the function is used:
-  expressions = expressions_for_function(fun);
+  expressions = expressions_for_function(fun,code);
   if(length(expressions)==0){ return(FALSE) }
   
   # Step 2: Get the arguments
