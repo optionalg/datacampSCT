@@ -1,24 +1,25 @@
 \name{called_functions}
 \alias{called_functions}
-\title{Get the functions a student called}
-\description{
-Function takes DM.user.code as input, then checks sequentially what functions were called by the student and returns a vector with the character names of those functions. 
-}
+\title{Check which functions were called by a student}
 \usage{
-called_functions(user.code=DM.user.code)
+called_functions(user_code = DM.user.code)
 }
 \arguments{
-  \item{user.code}{ Character text you want to investigate.} 
+  \item{user_code}{The string containing the code submitted
+  by the user.  The default is \code{DM.user.code} which
+  contains the student code submitted to the DataCamp
+  server (automagically).}
 }
-\value{A character vector with the function names called by the student, in the order they appeared in the user.code}
-
+\description{
+Function takes the user code as input, then checks which
+functions were called by the student and returns a
+character vector with the names of those functions. In case
+\code{DM.user.code} cannot be parsed, the function returns
+an empty character string.
+}
 \examples{
-DM.user.code <- ' #Some random user code
-x <- 1:10
-mean(x,y=blablaY,z=blablaZ);sum(x)
-sapply(x,FUN=sum)
-mean(x2=2,y2=3)
-'
-# Try it out:
-called_functions()
+DM.user.code = "#Some random user code\\n x <- 1:10 \\n mean(x,y=blablaY,z=blablaZ);sum(x)\\n sapply(x,FUN=sum) \\n mean(x2=2,y2=3)"
+ # Return the functions that were called in DM.user.code
+ called_functions()
 }
+

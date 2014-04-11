@@ -1,5 +1,3 @@
-export(called_functions, 
-       get_arguments, 
-       output_contains,
-       student_typed, 
-       function_has_arguments); 
+export(called_functions)
+export(get_arguments)
+export(output_contains)
