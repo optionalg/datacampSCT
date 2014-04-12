@@ -1,3 +1,4 @@
 export(called_functions)
+export(function_has_arguments)
 export(get_arguments)
 export(output_contains)
