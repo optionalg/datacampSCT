@@ -23,34 +23,34 @@
 #'  # Suppose the student has to write a loop that prints the numbers 1 up to 10.
 #'  
 #'  @export
-function_has_arguments = function(fun=NULL, args=NULL, values=NULL, eval=NULL, code=DM.user.code) {  
+function_has_arguments = function(fun = NULL, args = NULL, values = NULL, eval = NULL, code = DM.user.code) {  
   if (is.null(fun)) { 
     return(FALSE) 
   }
   if (is.null(args)) {     
-    return(length(expressions_for_function(fun,code))) 
+    return(length(expressions_for_function(fun, code))) 
   }
   if (is.null(eval)) { 
-    eval = rep(FALSE,length(args)) 
+    eval = rep(FALSE, length(args)) 
   }
   if (!is.null(values) && length(eval)!=length(values)) { 
     stop("eval vector should have same lenght as values vector, for obvious reasons ;-).") 
   }
   
   # Step 1: Get the expressions in which the function is used:
-  expressions = expressions_for_function(fun,code);
-  if(length(expressions)==0){ return(FALSE) }
+  expressions = expressions_for_function(fun, code);
+  if (length(expressions) == 0){ return(FALSE) }
   
   # Step 2: Get the arguments
   argument_list = list();
   for(i in 1:length(expressions)){
-    argument_list[[i]] = arguments_for_expression(expressions[i],fun=fun)
+    argument_list[[i]] = arguments_for_expression(expressions[i], fun = fun)
   }
   
   # Step 3: Find matches:
   matches = c();
   for(i in 1:length(argument_list)) {
-    matches[i] = check_function_arguments(argument_list[[i]],args,values,eval);
+    matches[i] = check_function_arguments(argument_list[[i]], args, values, eval)
   }
   return(sum(matches))
 }
@@ -65,7 +65,7 @@ expressions_for_function = function(fun = NULL, code=DM.user.code){
   return(called_expressions)
 }
 
-arguments_for_expression = function(expression=NULL,fun=NULL){
+arguments_for_expression = function(expression = NULL, fun = NULL) {
   arguments <- match.call(get(fun), call=parse(text=expression))[-1];
   arguments_list = as.list(arguments);
   
@@ -78,21 +78,20 @@ arguments_for_expression = function(expression=NULL,fun=NULL){
   return(arguments_list)
 }
 
-check_function_arguments = function(student_arguments=NULL,args=args,values=values,eval=eval){
+check_function_arguments = function(student_arguments = NULL, args = args, values = values, eval = eval) {
   relevant_student_args = student_arguments[ names(student_arguments) %in% args ];  
-  if(length(relevant_student_args)!=length(args)){ return(FALSE) }
-  
-  
+  if(length(relevant_student_args) != length(args)){ return(FALSE) }
+    
   match_vector = c();
   # Situation with values:
-  if(!is.null(values)){
+  if (!is.null(values)) {
     # Loop over relevant arguments: 
-    for(i in 1:length(args)){
-      index = which( names(relevant_student_args) %in% args[i] );
-      if(length(index)==0){ 
+    for (i in 1:length(args)) {
+      index = which(names(relevant_student_args) %in% args[i]);
+      if (length(index) == 0) { 
         return(FALSE) 
       } else{
-        if (eval[i]==FALSE){
+        if (eval[i] == FALSE) {
           match_vector[i] =  try(all.equal(as.character(relevant_student_args[[index]]), as.character(values[i])));
         } else {
           match_vector[i] =  try(all.equal(eval(parse(text=relevant_student_args[[index]])), eval(parse(text=values[i]))));        
@@ -100,9 +99,11 @@ check_function_arguments = function(student_arguments=NULL,args=args,values=valu
       }                      
     }
     match_vector = as.logical(match_vector);
-    if(any(is.na(match_vector))){ match_vector=FALSE }
-    return(all(match_vector)); # All values should be correct!
-  } else if (is.null(values)){
+    if (any(is.na(match_vector))) { 
+      match_vector=FALSE 
+    }
+    return(all(match_vector)) # All values should be correct!
+  } else if (is.null(values)) {
     # Situation without values: 
     # Just check whether all args were called by student:
     return(all(args %in%  names(student_arguments)))    

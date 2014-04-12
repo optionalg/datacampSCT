@@ -6,6 +6,7 @@
 #'  @param expr The expression (as string) for which the output should be in the student's console.
 #'  @param console_output The string containing the output printed to the student's console. 
 #'  The default is \code{DM.console.output} which is set on the DataCamp server (automagically).
+#'  This means you don't have to specify this argument when writing SCTs for DataCamp.com.
 #'      
 #'  @examples
 #'  # Suppose the student has to write a loop that prints the numbers 1 up to 10.
@@ -19,10 +20,10 @@
 #'  output_contains("for(i in 1:20){print(i)}")
 #'  
 #'  @export
-output_contains = function(expr, console_output=DM.console.output) {
+output_contains = function(expr, console_output = DM.console.output) {
   correct_output = try(capture.output(try(eval(parse(text=expr)))))
   
-  if (inherits(correct_output,"try-error")) {
+  if (inherits(correct_output, "try-error")) {
     return(FALSE)
   }
   correct_output = paste(correct_output, collapse='')
@@ -31,7 +32,7 @@ output_contains = function(expr, console_output=DM.console.output) {
   console_output = gsub("\n|[[:space:]]","", console_output)
   correct_output = gsub("\n|[[:space:]]","", correct_output)
   
-  where.is.regex = gregexpr(pattern=correct_output, text=console_output, fixed=TRUE)
+  where.is.regex = gregexpr(pattern = correct_output, text = console_output, fixed = TRUE)
   if (any(where.is.regex[[1]] == (-1))) { 
     return(FALSE) 
   } else { 
