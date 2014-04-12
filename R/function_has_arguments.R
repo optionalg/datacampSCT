@@ -1,16 +1,12 @@
 #' Check whether a student called a function with the correct formal arguments or actual arguments 
 #' 
 #' This function is the key component of many more advanced Submission Correctness Tests. 
-#' We use the terms "formal arguments" and "actual arguments" (read http://adv-r.had.co.nz/Functions.html#function-arguments if you are not familiar with those terms).
-#' 
-#' The function returns the number of times the function call you specify was done in the student code.
+#' We use the terms "formal arguments" and "actual arguments" (read \url{http://adv-r.had.co.nz/Functions.html#function-arguments} if you are not familiar with those terms). The function returns the number of times the function call you specify was done in the student code.
 #' The function can be used in a "layered fashion". Have a look at the examples to understand the different use cases.
 #' You can either check whether the student assigned "something" to the formal arguments
 #' or you can check whether the student used the correct actual arguments. 
 #' In the latter case, you can compare what was supplied to the actual arguments 
-#' either as a string or after evaluating it.
-#' 
-#' Have a look at the examples in case this is unclear.
+#' either as a string or after evaluating it.  Have a look at the examples in case this is unclear.
 #' 
 #' @param fun String with the name of the function. E.g. "plot".
 #' @param args A character vector with the names of the formal arguments a student should have assigned 
@@ -92,7 +88,9 @@ expressions_for_function = function(fun = NULL, code = NULL) {
   if (inherits(parseData, "try-error")) {
     return(FALSE)
   }
-  ids_of_expressions = with(parseData, parent[text == fun & token == "SYMBOL_FUNCTION_CALL"]) 
+  
+  ids_of_expressions = parseData$parent[parseData$text == fun & parseData$token == "SYMBOL_FUNCTION_CALL"] 
+  #ids_of_expressions = with(parseData, parent[text == fun & token == "SYMBOL_FUNCTION_CALL"]) 
   ids_of_expressions = parseData$parent[ parseData$id %in% ids_of_expressions ] 
   called_expressions = sapply(ids_of_expressions, function(x) getParseText(parseData, id=x))
   

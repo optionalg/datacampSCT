@@ -35,21 +35,18 @@ function_has_arguments(fun = NULL, args = NULL, values = NULL,
 This function is the key component of many more advanced
 Submission Correctness Tests. We use the terms "formal
 arguments" and "actual arguments" (read
-http://adv-r.had.co.nz/Functions.html#function-arguments if
-you are not familiar with those terms).
-}
-\details{
-The function returns the number of times the function call
-you specify was done in the student code. The function can
-be used in a "layered fashion". Have a look at the examples
-to understand the different use cases. You can either check
+\url{http://adv-r.had.co.nz/Functions.html#function-arguments}
+if you are not familiar with those terms). The function
+returns the number of times the function call you specify
+was done in the student code. The function can be used in a
+"layered fashion". Have a look at the examples to
+understand the different use cases. You can either check
 whether the student assigned "something" to the formal
 arguments or you can check whether the student used the
 correct actual arguments. In the latter case, you can
 compare what was supplied to the actual arguments either as
-a string or after evaluating it.
-
-Have a look at the examples in case this is unclear.
+a string or after evaluating it.  Have a look at the
+examples in case this is unclear.
 }
 \examples{
 # When student submits incorrect code function_has_arguments returns false

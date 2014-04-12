@@ -21,7 +21,7 @@ contains a syntax error), the function returns an empty
 character string.
 }
 \examples{
-DM.user.code = "mean(x, y = blablaY, z = blablaZ);sum(x)\\n sapply(x, FUN = sum)"
+DM.user.code = "x=rnorm(100);mean(x = 1:10,);sum(x)"
  # Return the functions that were called in DM.user.code
  called_functions()
 }

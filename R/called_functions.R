@@ -10,7 +10,7 @@
 #'  This means you don't have to specify this argument when writing SCTs for DataCamp.com.
 #'  
 #'  @examples
-#'  DM.user.code = "mean(x, y = blablaY, z = blablaZ);sum(x)\n sapply(x, FUN = sum)"
+#'  DM.user.code = "x=rnorm(100);mean(x = 1:10,);sum(x)"
 #'  # Return the functions that were called in DM.user.code
 #'  called_functions()
 #'  
@@ -20,7 +20,7 @@ called_functions = function(code = DM.user.code) {
   if (inherits(parseData, "try-error")) {
     return("")
   }
-  id = with(parseData, id[token == "SYMBOL_FUNCTION_CALL"]);
+  id = parseData$id[ parseData$token == "SYMBOL_FUNCTION_CALL" ]
   call_funs = sapply(id, function(x) getParseText(parseData, id = x))
   
   return(call_funs);
