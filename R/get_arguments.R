@@ -26,7 +26,7 @@ get_arguments = function(fun = NULL, code = DM.user.code) {
     stop("The 'fun' argument cannot be empty.")
   }
   # Step 1: Get the expressions in which the function is used:
-  expressions = expressions_for_function(fun,code)
+  expressions = expressions_for_function(fun, code)
   
   # Step 2: Get the arguments for each function call:
   args_list = lapply(expressions, arguments_for_expression, fun)

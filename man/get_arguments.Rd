@@ -11,16 +11,21 @@ get_arguments(fun = NULL, code = DM.user.code)
   \item{code}{String with the code submitted by the
   student.  The default is \code{DM.user.code} which
   contains the student code submitted to the DataCamp
-  server (automagically).}
+  server (automagically).  This means you don't have to
+  specify this argument when writing SCTs for
+  DataCamp.com.}
 }
 \description{
 Function takes a function name (\code{fun}) and the
-submitted student code (\code{code}) as input, then checks
-how many times the user called that function. For each time
-the function was called it returns the arguments supplied
-to the function. The ouput is a list. Each list component
-contains a vector with the supplied arguments. The names of
-the latter vector are the respective argument names.
+submitted student code (\code{code}) as input. For every
+time the function was called, it returns the formal and the
+actual arguments of that function call.
+}
+\details{
+The ouput is a list and each list item corresponds to a
+function call by the student. Each list item contains a
+character vector with as values the actual arguments and as
+names the formal arguments.
 }
 \examples{
 # Student called the plot function once with two arguments:

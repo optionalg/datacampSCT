@@ -11,7 +11,9 @@ output_contains(expr, console_output = DM.console.output)
   \item{console_output}{The string containing the output
   printed to the student's console.  The default is
   \code{DM.console.output} which is set on the DataCamp
-  server (automagically).}
+  server (automagically).  This means you don't have to
+  specify this argument when writing SCTs for
+  DataCamp.com.}
 }
 \description{
 Function checks whether the student's console contains the

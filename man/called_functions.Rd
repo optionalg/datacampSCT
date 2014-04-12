@@ -2,23 +2,26 @@
 \alias{called_functions}
 \title{Check which functions were called by a student}
 \usage{
-called_functions(user_code = DM.user.code)
+called_functions(code = DM.user.code)
 }
 \arguments{
-  \item{user_code}{The string containing the code submitted
-  by the user.  The default is \code{DM.user.code} which
+  \item{code}{The string containing the code submitted by
+  the user.  The default is \code{DM.user.code} which
   contains the student code submitted to the DataCamp
-  server (automagically).}
+  server (automagically).  This means you don't have to
+  specify this argument when writing SCTs for
+  DataCamp.com.}
 }
 \description{
-Function takes the user code as input, then checks which
-functions were called by the student and returns a
-character vector with the names of those functions. In case
-\code{DM.user.code} cannot be parsed, the function returns
-an empty character string.
+Function takes the user code as input, and returns a
+character vector with the names of the functions called by
+a student. In case the code provided by a student cannot be
+parsed (which happens for example when the student code
+contains a syntax error), the function returns an empty
+character string.
 }
 \examples{
-DM.user.code = "#Some random user code\\n x <- 1:10 \\n mean(x,y=blablaY,z=blablaZ);sum(x)\\n sapply(x,FUN=sum) \\n mean(x2=2,y2=3)"
+DM.user.code = "mean(x, y = blablaY, z = blablaZ);sum(x)\\n sapply(x, FUN = sum)"
  # Return the functions that were called in DM.user.code
  called_functions()
 }
