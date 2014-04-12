@@ -24,8 +24,8 @@ actual arguments of that function call.
 \details{
 The ouput is a list and each list item corresponds to a
 function call by the student. Each list item contains a
-character vector with as values the actual arguments and as
-names the formal arguments.
+vector with as values the actual arguments and as names the
+formal arguments.
 }
 \examples{
 # Student called the plot function once with two arguments:

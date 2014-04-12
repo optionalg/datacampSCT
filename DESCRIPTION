@@ -1,9 +1,9 @@
 Package: datacampSCT
 Type: Package
-Title: Easily write submission correctness Tests
+Title: Easily write Submission Correctness Tests
 Version: 0.1
 Date: 2013-09-07
-Author: Jonathan Cornelissen
+Author: DataCamp
 Maintainer: Jonathan Cornelissen <Jonathan@DataCamp.com>
 Description: This package makes it easy and fun to write Submission Correctness
     Tests (SCTs) for your interactive courses on www.DataCamp.com.

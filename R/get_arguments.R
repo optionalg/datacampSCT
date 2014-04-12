@@ -4,7 +4,7 @@
 #' For every time the function was called, it returns the formal and the actual arguments of that function call. 
 #' 
 #' The ouput is a list and each list item corresponds to a function call by the student. 
-#' Each list item contains a character vector with as values the actual arguments and as names the formal arguments.
+#' Each list item contains a vector with as values the actual arguments and as names the formal arguments.
 #' 
 #'  @param fun String with the name of the function for which you want to find the arguments supplied by the student.
 #'  @param code String with the code submitted by the student. 
@@ -29,7 +29,12 @@ get_arguments = function(fun = NULL, code = DM.user.code) {
   expressions = expressions_for_function(fun, code)
   
   # Step 2: Get the arguments for each function call:
-  args_list = lapply(expressions, arguments_for_expression, fun)
+  args_list = lapply(expressions, 
+                     function(expression = NULL, fun = NULL) {
+                       arguments = match.call(get(fun), call=parse(text=expression))[-1]
+                       arguments_list = as.list(arguments) }, 
+                     fun)
   
   return(args_list)
 }
+
