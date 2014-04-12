@@ -20,14 +20,18 @@
 #'  
 #'  @export
 output_contains = function(expr, console_output=DM.console.output) {
-  correct.output = try(capture.output(try(eval(parse(text=expr)))))
-  correct.output = paste(correct.output, collapse='')
+  correct_output = try(capture.output(try(eval(parse(text=expr)))))
+  
+  if (inherits(correct_output,"try-error")) {
+    return(FALSE)
+  }
+  correct_output = paste(correct_output, collapse='')
   
   # Remove new-lines: 
   console_output = gsub("\n|[[:space:]]","", console_output)
-  correct.output = gsub("\n|[[:space:]]","", correct.output)
+  correct_output = gsub("\n|[[:space:]]","", correct_output)
   
-  where.is.regex = gregexpr(pattern=correct.output, text=console_output, fixed=TRUE)
+  where.is.regex = gregexpr(pattern=correct_output, text=console_output, fixed=TRUE)
   if (any(where.is.regex[[1]] == (-1))) { 
     return(FALSE) 
   } else { 
