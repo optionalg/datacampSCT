@@ -11,7 +11,7 @@
 #'  @examples
 #'  # Suppose the student has to write a loop that prints the numbers 1 up to 10.
 #'  # A smart student does exactly that and thus submits the code assigned to DM.user.code: 
-#'  DM.user.code = 'n=10;for(i in 1:n){print(i)};'
+#'  DM.user.code = "n=10;for(i in 1:n){print(i)};"
 #'  # What student's console contains:
 #'  DM.console.output = paste(capture.output(eval(parse(text=DM.user.code))), collapse="")
 #'  # What the test tells us:
