@@ -1,37 +1,50 @@
 [![Build Status](https://api.travis-ci.org/Data-Camp/datacampSCT.svg?branch=master)](https://travis-ci.org/Data-Camp/datacampSCT)
 
-This `datacampSCT` package is a separate part of the `datacamp` R package, containing only the functions aimed at making it easy to write Submission Correctness Tests (SCTs).
+The `datacampSCT` package is a set of help functions that enable you to quickly test student code and give feedback to a student on what's wrong/right in an exercise. 
 
 ## Submission Correctness Tests
-The key ingredient to an interactive course is the Submission Correctness Test (SCT). Conceptually, an SCT is simple. It takes as input everything a student did for a certain exercise, processes it and ouputs:
+<center>### "Mistakes are not errors but partially correct solutions with underlying logic."</center>
 
-1. Whether the exercise was correctly solved.
-2. Feedback to the student, either to congratulate him when he correctly solved the exercise, or to guide him into the direction of the correct solution in case he didn't find the correct solution.
+The key ingredient to an interactive course is the Submission Correctness Test (SCT). Conceptually, an SCT is simple. It takes as input the code a student submitted, processes it and outputs:
+
+	1. Whether the exercise was correctly solved.
+	2. Feedback to the student, either to congratulate him when he correctly solved the exercise, or to guide him into the direction of the correct solution in case he didn't find the correct solution.
 
 Submission Correctness Tests are written in R, so it is possible to leverage existing R functionality, or create new types of tests that can be shared with the community.
 
 ### Submission Correctness Tests step-by-step:
-In this subsection, we describe the three essential ingredients of an SCT: (i) the student's input, (ii) testing the student's submission, (iii) the output of the SCT.
+
+In this subsection, we describe the three essential ingredients of an SCT: 
+	1. The student's input.
+	2. Testing the student's submission.
+	3. The output of the SCT.
 
 1. **Student's input:**<br>
-SCT's are run in the students workspace, so you can use all objects a student created as input for the test. Furthermore, DataCamp gives you access to two more items, that can help you to generate useful feedback for your students:
+SCT's are run in the students workspace (the global environment), so you can use all objects a student created as input for the test. Furthermore, DataCamp gives you access to two more items, that can help you to generate useful feedback for your students:
    - `DM.user.code`: The code written by the student as a string.
    - `DM.console.output`: The output in the console as a string.
 
 2. **Testing the students submission:**<br>
-The Submission Correctness Test can take everything described in step 1 as input, and processes it to evaluate whether the response of a student was correct. These tests can be really simple or relatively advanced, but they are always written in R, so you can leverage existing functionality. To make writing these SCTs as simple as possible, the datacamp R package (which is preloaded on our servers) contains some functionality for often used tests. You can install it locally through:
-   ```ruby
+The Submission Correctness Test processes the inputs described in step one, to decide whether a student correctly solved the exercise. These tests can be really simple or relatively advanced, but they are always written in R, so you can leverage existing functionality. To make writing these SCTs as simple as possible, the `datacampSCT` provides a few help functions. You can install it locally through:
+   ```r
 library("devtools");
 install_github("datacampSCT","data-camp")
 install_github("datacamp","data-camp");
 library("datacamp")
 ```
-(Note: we are investigating whether it would be feasible/better to write a wrapper on top of the testthat package.)
 
-3. **Outout:**<br>
-The output of a Submission Correctness Test is a list with two components: (i) a boolean (TRUE/FALSE) indicating whether the exercise was correctly solved, and (ii) a string providing a message to the student. The output of the test should be assigned to a variable `DM.result`.<br><br>DataCamp will show your feedback to the student in a standardized way: Green when the student correctly solved the exercise, and red when he didn't. We encourage you to provide useful messages to your students, and write different messages for different mistakes a student can make.
+(Note: we are developing a new version of this package that will leverage the functionality in the `testthat` package.)
+
+3. **Output:**<br>
+The output of a Submission Correctness Test is a list with two components:
+	1. a boolean (TRUE/FALSE) indicating whether the exercise was correctly solved, and
+	2. a string providing a message to the student. 
+The output of the test should be assigned to a variable `DM.result`.
+
+DataCamp will show your feedback to the student in a standardized way: Green when the student correctly solved the exercise, and red when he didn't. We encourage you to provide useful messages to your students, and write different messages for different mistakes a student can make.
 
 ### Submission Correctness Tests Examples:
+
 You can use SCT's to test a wide variety of things: e.g. has the student...
 - estimated a certain model correctly?
 - generated a transformed time series that fulfills certain conditions?
