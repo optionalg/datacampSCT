@@ -36,7 +36,7 @@ install_github("datacamp","data-camp");
 library("datacamp")
 ```
 
-(Note: we are developing a new version of this package that will leverage the functionality in the `testthat` package.)
+(Note: we are developing a new and improved version of this package that will leverage the functionality in the `testthat` package.)
 
 - **Output:**<br>
 The output of a Submission Correctness Test is a list with two components:
@@ -57,38 +57,86 @@ You can use SCT's to test a wide variety of things: e.g. has the student...
 
 The examples above show the immense potential of SCTs to automate teaching. The examples below are simpler, and aim to illustrate the concept.
 
-#### Example one: illustrating the concept of an SCT
+#### Example: illustrating the concept of an SCT
 Let's start with a really dummed down example to illustrate the idea behind an SCT. Suppose you ask a student to assign the value 42 to the variable `x`. To test what a user did, you could write the following SCT: <i>(example provided for educational purposes only)</i>
 ```ruby
-if (x == 5) { 
+# Smart student code
+x = 42
+# Not-so-smart student code
+x = 43
+
+# Start SCT
+if (x == 42) { 
   DM.result = list(TRUE, "Well done, you genius!")
 } else { 
-  DM.result = list(FALSE, "Please assign 5 to x") 
+  DM.result = list(FALSE, "Please assign 42 to x") 
 }
 ```
 
-#### Example two: checking whether a student typed certain expressions
-Suppose you expect a student to type `17%%4` and `2^5` somewhere in the editor, and you would like to check whether a student actually did that. The SCT then simply becomes:
+#### Example: check whether a student typed certain expressions
+Suppose you expect a student to type `17%%4` and `2^5` somewhere in the editor, and you would like to check whether a student actually did that. The code:
 ```ruby
-DM.result = code_test( c("17%%4","2^5") )
+# Smart student code
+DM.user.code = "17%%4; 2^5"
+# Not-so-smart student code
+DM.user.code = "42"
+
+# Start SCT
+if (! (student_typed("17%%4") & student_typed("2^5"))) {
+	DM.result = list(FALSE,"Looks like you didn't type one of the expressions we expected.")
+} else {
+	DM.result = list(TRUE,"Well done!")	
+}
 ```
 
-#### Example three: checking whether a student assigned a value to a variable
-Suppose you expect a student to assign the value 5 to the variable `my.apples`. The SCT, then simply becomes:
+#### Example: check whether the student printed something to the console
+
+Suppose the student has to write a loop that prints the numbers 1 up to 10.
 ```ruby
-DM.result = closed_test(names = "my,apples", values = 5)
+# A smart student does exactly that and thus submits the code assigned to DM.user.code: 
+DM.user.code = "n=10;for(i in 1:n){print(i)};"
+# What student's console contains:
+DM.console.output = paste(capture.output(eval(parse(text = DM.user.code))), collapse="")
+
+# Start SCT: 
+if (! output_contains("for(i in 1:10){print(i)}")) {
+	DM.result = list(FALSE, "Did you print the numbers one up to ten to the console?")
+} else {
+	DM.result = list(TRUE, "Well done!")
+}
 ```
-Similarly, to test the values of multiple variables, you can use:
-```ruby
-names  = c("my.apples", "my.oranges", "my.fruit")
-values = c(5, 6, "my.apples+my.oranges")
-DM.result = closed_test(names, values)
+
+#### Example: check whether a student called certain functions
+
+Suppose you just want to check whether a student called certain functions, but the details are not important. 
+For example, a student should have called the `rnorm()` and `mean()` functions in his code. 
+
+```ruby 
+# Student submits the code assigned to DM.user.code as answer
+DM.user.code = "x=rnorm(100);mean(x = 1:10,);sum(x)"
+
+# Start SCT
+if (! (c("rnorm", "mean") %in% called_functions())) {
+	DM.result = list(FALSE,"Looks like you forgot to call either 'rnorm()' or 'mean()'.")
+} else {
+	DM.result = list(TRUE,"Well done!")	
+}
 ```
-Using the build in `closed_test` function ensures that useful help messages are generated automatically for the student. Obviously, you can as well make use of values in the users workspace to test. Suppose for example you'd like to test whether a student constructed a named list (my.list) with the components: a vector (my.vector), a matrix (my.matrix) and a data frame (my.df). This can be checked through:
-```ruby
-name   = "my.list"
-value  = "list(VECTOR = my.vector, MATRIX = my.matrix, DATAFRAME = my.df)"
-DM.result = closed_test(name, value)
+
+#### Example: check whether a student called a function with the correct arguments
+
+Suppose you are teaching students about the normal distribution. Their task in this exercise is to generate 10000 observations and plot a histogram with the color blue and 50 breaks. This can be tested as follows (simplified for educational purposes):
+
+```ruby 
+# Smart student submits the code assigned to DM.user.code as answer
+DM.user.code = "hist(rnorm(10000),col='blue',breaks=50)"
+
+# Start SCT
+if (function_has_arguments("hist", c("x","col","breaks"), c("rnorm(10000)","blue","50"))==0) {
+	DM.result = list(FALSE, "Try again! You didn't create a histogram with the correct arguments.")	
+} else {
+	DM.result = list(TRUE, "Correct!")
+}
 ```
 
 #### Other examples:
