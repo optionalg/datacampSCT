@@ -138,5 +138,27 @@ if (function_has_arguments("hist", c("x","col","breaks"), c("rnorm(10000)","blue
 }
 ```
 
+#### Example: creating a multiple choice question
+
+Is is also possible to craft multiple choice questions using SCTs. Suppose you have a multiple choice question with 4 options, and the second option represents the correct answer. You would like to check if the student chose the right option:
+
+```ruby 
+# Smart student selects option 2 in the MCQ-menu. DM.user.code now equals: 
+DM.user.code = 2
+
+# Not-so-smart student selects option 4 in the MCQ-menu. DM.user.code now equals: 
+DM.user.code = 4
+
+
+# Start SCT
+if ( !exists("DM.result") ){
+  DM.result = list(FALSE, "Please select one of the options!")
+} else if ( identical(DM.result, 2) ){
+  DM.result = list(TRUE, "Well done! You are a smart student.")
+} else {
+  DM.result = list(FALSE, "Incorrect. You are a not-so-smart student.")
+}
+```
+
 #### Other examples:
 Look at the source code of the interactive [Introduction to R](https://github.com/data-camp/introduction_to_R) course.
