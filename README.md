@@ -23,7 +23,7 @@ In this subsection, we describe the three essential ingredients of an SCT:
 3. The output of the SCT.
 
 - **Student's input:**<br>
-SCT's are run in the students workspace (the global environment), so you can use all objects a student created as input for the test. Furthermore, DataCamp gives you access to two more items, that can help you to generate useful feedback for your students:
+SCT's are run in the students workspace (the global environment), so you can use all objects a student created as input for the test. Furthermore, DataCamp gives you access to two more items that can help you to generate useful feedback for your students:
    - `DM.user.code`: The code written by the student as a string.
    - `DM.console.output`: The output in the console as a string.
 
@@ -35,8 +35,7 @@ install_github("datacampSCT","data-camp")
 install_github("datacamp","data-camp");
 library("datacamp")
 ```
-
-(Note: we are developing a new and improved version of this package that will leverage the functionality in the `testthat` package.)
+	(Note: we are developing a new and improved version of this package that will leverage the functionality in the `testthat` package.)
 
 - **Output:**<br>
 The output of a Submission Correctness Test is a list with two components:
@@ -136,6 +135,27 @@ if (function_has_arguments("hist", c("x","col","breaks"), c("rnorm(10000)","blue
 	DM.result = list(FALSE, "Try again! You didn't create a histogram with the correct arguments.")	
 } else {
 	DM.result = list(TRUE, "Correct!")
+}
+```
+
+#### Example: creating a multiple choice question
+
+It is also possible to craft multiple choice questions using SCTs. Suppose you have a multiple choice question with 4 options, and the second option represents the correct answer. You would like to check if the student chose the right option:
+
+```ruby 
+# Smart student selects option 2 in the MCQ-menu. DM.user.code now equals: 
+DM.user.code = 2
+
+# Not-so-smart student selects option 4 in the MCQ-menu. DM.user.code now equals: 
+DM.user.code = 4
+
+# Start SCT
+if ( !exists("DM.result") ){
+  DM.result = list(FALSE, "Please select one of the options!")
+} else if ( identical(DM.result, 2) ){
+  DM.result = list(TRUE, "Well done! You are a smart student.")
+} else {
+  DM.result = list(FALSE, "Incorrect. You are a not-so-smart student.")
 }
 ```
 
