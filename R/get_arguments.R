@@ -27,7 +27,8 @@ get_arguments = function(fun = NULL, code = DM.user.code) {
   }
   # Step 1: Get the expressions in which the function is used:
   expressions = expressions_for_function(fun, code)
-  
+  if(length(expressions)==0){ return(FALSE) }
+    
   # Step 2: Get the arguments for each function call:
   args_list = lapply(expressions, 
                      function(expression = NULL, fun = NULL) {

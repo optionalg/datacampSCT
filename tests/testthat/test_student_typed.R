@@ -1,8 +1,9 @@
 context("student_typed checks")
 
-test_that("The student typed function works as expected", {  
+test_that("The student typed function basics work as expected", {  
   expect_that(student_typed("abc", code = "def"), is_false())
   expect_that(student_typed("t", code = "t"), equals(1))
+  expect_that(student_typed("abc", code="abc;abc;abc"), equals(3))
 })
 
 test_that("It ignores white spaces", {  
@@ -31,4 +32,5 @@ test_that("It ignores whether student used T/F or TRUE/FALSE as booleans", {
 test_that("It ignores whether it ignores ; and newlines", {  
   expect_that(student_typed("a;b;c", code = "abc"), equals(1))
   expect_that(student_typed("a;\nb;\nc", code = "abc"), equals(1))
+  expect_that(student_typed("abc", code = "abc;\nabc;\nabc"), equals(3))  
 })
