@@ -1,16 +1,6 @@
 context("function_has_arguments checks")
 
 test_that("when student submits incorrect code function_has_arguments returns false", {
-#   code_with_error = "mean(x);plot(xasdfasb,a;mean(x)";
-  require("datacampSCT")
-#todo
-  expect_that(student_typed("t","t"), equals(1))
-  expect_that(called_functions(), equals(""))
-#todo
-#  expect_that(function_has_arguments("plot", code = code_with_error), is_false())
-
-  expect_that(function_has_arguments("mean",code="mean(1)"),equals(1))
-
    expect_that(function_has_arguments("plot", "x",code = code_with_error), is_false())
    expect_that(function_has_arguments("mean", "x",code = code_with_error), is_false())
    expect_that(function_has_arguments("plot", code = code_with_error), is_false())
