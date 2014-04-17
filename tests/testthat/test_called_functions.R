@@ -9,7 +9,7 @@ test_that("The called_functions basics work as expected", {
       )
     }
   }
-    
+  
   expect_that(called_functions(code = "mean(x);plot(x)"), contains("mean"))
   expect_that(called_functions(code = "mean(x);plot(x);plot(x~y)"), contains("mean"))
   expect_that(called_functions(code = "mean(x);plot(x);plot(x~y)"), contains(rep("plot", 2)))
