@@ -9,3 +9,5 @@ Description: This package makes it easy and fun to write Submission Correctness
     Tests (SCTs) for your interactive courses on www.DataCamp.com.
 License: MIT
 URL: www.DataCamp.com
+Suggests:
+    testthat

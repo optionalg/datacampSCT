@@ -31,9 +31,9 @@ student_typed = function(string, code = DM.user.code) {
   code   = gsub("[[:space:]]|;|\n", "", code )
   string = gsub("[[:space:]]|;|\n", "", string )
   
-  # Student can choose to assign by "=" or "=", this shouldn't matter
-  code   = gsub("=", "=", code)
-  string = gsub("=", "=", string)
+  # Student can choose to assign by "=" or "<-", this shouldn't matter
+  code   = gsub("=", "<-", code)
+  string = gsub("=", "<-", string)
   
   # Student can choose to TRUE/T and FALSE/F
   code      = gsub("FALSE", "F", code)
