@@ -16,7 +16,7 @@
 #'  
 #'  @export
 called_functions = function(code = DM.user.code) {
-  parseData = try(getParseData(parse(text = code)), silent=TRUE)
+  parseData = try(getParseData(parse(text = code, keep.source = TRUE)), silent=TRUE)
   if (inherits(parseData, "try-error")) {
     return("")
   }
