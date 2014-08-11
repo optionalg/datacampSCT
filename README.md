@@ -43,7 +43,7 @@ The output of a Submission Correctness Test is a list with two components:
 	2. a string that provides a message to the student. 
 The output of the test should be assigned to a variable `DM.result`.
 
-DataCamp will show your feedback to the student in a standardized way: green if the student solved the exercise correctly, and red if he did not. We encourage you to provide useful messages to your students, and to write different messages for different mistakes a student can make.
+DataCamp will show your feedback to the student in a standardized way: green means that the student solved the exercise correctly, while red means that he did not. We encourage you to provide useful messages to your students, and to write different messages for different mistakes a student can make.
 
 ### Submission Correctness Tests Examples:
 
