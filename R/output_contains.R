@@ -39,3 +39,22 @@ output_contains = function(expr, console_output = DM.console.output) {
     return(TRUE) 
   }
 }
+
+#' @export
+output_contains2 = function(expr, console_output = DM.console.output) {
+  library("evaluate")
+  correct_output = try(evaluate(expr)[[2]])
+  if (inherits(correct_output, "try-error")) {
+    return(FALSE)
+  }
+  correct_output = paste(correct_output, collapse = "")
+  console_output = gsub("\n|[[:space:]]", "", console_output)
+  correct_output = gsub("\n|[[:space:]]", "", correct_output)
+  where.is.regex = gregexpr(pattern = correct_output, text = console_output, 
+                            fixed = TRUE)
+  if (any(where.is.regex[[1]] == (-1))) {
+    return(FALSE)
+  } else {
+    return(TRUE)
+  }  
+}
