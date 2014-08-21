@@ -43,7 +43,7 @@ output_contains = function(expr, console_output = DM.console.output) {
 #' @export
 output_contains2 = function(expr, console_output = DM.console.output) {
   library("evaluate")
-  correct_output = try(evaluate(expr)[[2]])
+  correct_output = try(evaluate(expr, envir = globalenv())[[2]])
   if (inherits(correct_output, "try-error")) {
     return(FALSE)
   }
