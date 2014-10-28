@@ -68,3 +68,11 @@ test_that("you specify the arguments of a function explicitly with evaluation", 
   expect_that(function_has_arguments("plot",c("xlab","x",'ylab'),c("my_test","1:5","saywhat"),eval=c(T,T,F),code=code3), equals(1));
   expect_that(function_has_arguments("hist","x","mean(1:10)",eval=T,code=code3), equals(1));
 })
+
+test_that("Correct handling of TRUE, T and FALSE, F", {
+  x = 1:10
+  code4 = "hist(x, right = TRUE)"
+  code5 = "hist(x, right = T)"
+  expect_that(function_has_arguments("hist", "right", "T", eval=TRUE, code = code4), equals(1))
+  expect_that(function_has_arguments("hist", "right", "TRUE", eval=TRUE, code = code5), equals(1))  
+})
