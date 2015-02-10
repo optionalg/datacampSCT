@@ -55,20 +55,6 @@ test_that("you specify the arguments of a function explicitly without evaluation
   expect_that(function_has_arguments("hist",c("x","z"),"mean(rnorm(100))",code=code2), throws_error())    
 })
 
-
-test_that("you specify the arguments of a function explicitly with evaluation", { 
-  x = y = 1:10; 
-  my_test=label="test";
-  code3 = "plot(1:5,pch=16,xlab=label,ylab='saywhat');plot(x);plot(x~y);mean(x);hist(mean(1:10))"; 
-  
-  expect_that(function_has_arguments("plot","x","1:10",eval=TRUE,code=code3), equals(1));
-  expect_that(function_has_arguments("mean","x","1:10",eval=TRUE,code=code3), equals(2));  
-  expect_that(function_has_arguments("plot","xlab","my_test",eval=TRUE,code=code3), equals(1));
-  
-  expect_that(function_has_arguments("plot",c("xlab","x",'ylab'),c("my_test","1:5","saywhat"),eval=c(T,T,F),code=code3), equals(1));
-  expect_that(function_has_arguments("hist","x","mean(1:10)",eval=T,code=code3), equals(1));
-})
-
 test_that("Correct handling of TRUE, T and FALSE, F", {
   x = 1:10
   code4 = "hist(x, right = TRUE)"
