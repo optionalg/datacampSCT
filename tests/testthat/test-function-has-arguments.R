@@ -1,4 +1,4 @@
-context("function_has_arguments checks")
+context("function_has_arguments")
 
 test_that("when student submits incorrect code function_has_arguments returns false", {
   code_with_error = "mean(x);plot(xasdfasb,a;mean(x)"

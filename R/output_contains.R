@@ -40,6 +40,13 @@ output_contains = function(expr, console_output = DM.console.output) {
   }
 }
 
+#' Other version of output_contains useful in some cases
+#' 
+#' @param expr The expression (as string) for which the output should be in the student's console.
+#' @param console_output The string containing the output printed to the student's console. 
+#' The default is \code{DM.console.output} which is set on the DataCamp server (automagically).
+#' This means you don't have to specify this argument when writing SCTs for DataCamp.com.
+#'  
 #' @export
 output_contains2 = function(expr, console_output = DM.console.output) {
   library("evaluate")

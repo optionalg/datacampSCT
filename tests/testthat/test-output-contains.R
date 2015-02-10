@@ -1,4 +1,4 @@
-context("output_contains checks")
+context("output_contains")
 
 test_that("output_contains basics work as expected", {  
   DM.user.code = "n=10;for(i in 1:n){print(i)};"

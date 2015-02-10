@@ -1,4 +1,4 @@
-context("get_arguments checks")
+context("get_arguments")
  
 test_that("The get_arguments function basics work as expected", {  
   contains <- function(expected) {

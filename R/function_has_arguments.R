@@ -46,15 +46,15 @@
 #'  
 #'  @export
 function_has_arguments = function(fun = NULL, args = NULL, values = NULL, eval = NULL, code = DM.user.code) {  
-  if (is.null(fun)) { 
+  if (is.null(fun)) {
     return(FALSE) 
   }
-  if (is.null(args)) {     
+  if (is.null(args)) {
     expressions = expressions_for_function(fun = fun, code = code)
     if (length(expressions) == 0 || any(expressions == FALSE)) { 
       return(FALSE) 
     } else {
-      return(length(expressions_for_function(fun = fun, code = code)))       
+      return(length(expressions))       
     }
   }
   if (is.null(eval)) { 
@@ -84,7 +84,8 @@ function_has_arguments = function(fun = NULL, args = NULL, values = NULL, eval =
 
 expressions_for_function = function(fun = NULL, code = NULL) {
   # Parse user code and get parse information: 
-  parseData          = try(getParseData(parse(text=code)),silent=TRUE)
+  parseData = try(getParseData(parse(text=code, keep.source = TRUE)),silent=TRUE)
+  
   if (inherits(parseData, "try-error")) {
     return(FALSE)
   }
@@ -92,12 +93,13 @@ expressions_for_function = function(fun = NULL, code = NULL) {
   ids_of_expressions = parseData$parent[parseData$text == fun & parseData$token == "SYMBOL_FUNCTION_CALL"] 
   #ids_of_expressions = with(parseData, parent[text == fun & token == "SYMBOL_FUNCTION_CALL"]) 
   ids_of_expressions = parseData$parent[ parseData$id %in% ids_of_expressions ] 
+  
   called_expressions = sapply(ids_of_expressions, function(x) getParseText(parseData, id=x))
   
   return(called_expressions)
 }
 
-arguments_for_expression = function(expression = NULL, fun = NULL) {
+arguments_for_expression = function(expression = NULL, fun = NULL) {  
   arguments = match.call(get(fun), call=parse(text=expression))[-1]
   arguments_list = as.list(arguments)
   

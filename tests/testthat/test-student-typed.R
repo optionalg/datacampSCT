@@ -1,4 +1,4 @@
-context("student_typed checks")
+context("student_typed")
 
 test_that("The student typed function basics work as expected", {  
   expect_that(student_typed("abc", code = "def"), is_false())
